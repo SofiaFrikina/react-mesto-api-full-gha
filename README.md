@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.32.8
+IP-адрес <158.160.32.8>
 
 Frontend https://sofia.frikina.nomoredomainsrocks.ru
 
