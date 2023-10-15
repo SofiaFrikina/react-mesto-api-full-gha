@@ -1,0 +1,9 @@
+.popup__label {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-self: center;
+    
+    
+    
+}

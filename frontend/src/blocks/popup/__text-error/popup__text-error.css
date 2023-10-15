@@ -1,0 +1,17 @@
+.popup__text-error {
+    visibility: hidden;
+    opacity: 0;
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
+    text-align: start;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    
+}
+

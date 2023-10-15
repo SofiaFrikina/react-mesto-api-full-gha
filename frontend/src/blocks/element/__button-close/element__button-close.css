@@ -1,0 +1,22 @@
+.element__button-close {
+    background-image: url(../../../images/trash.svg);
+    width: 18px;
+    height: 19px;
+    border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    
+    
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.element__button-close:hover {
+    opacity: .6;
+}

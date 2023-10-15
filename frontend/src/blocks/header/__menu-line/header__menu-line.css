@@ -1,0 +1,39 @@
+@media screen and (max-width: 580px) {
+    .header__menu-line {
+        position: absolute;
+        display: block;
+        margin: 0;
+        width: 24px;
+        height: 3px;
+        background-color: #FFF;
+        
+        opacity: 1;
+    }
+}
+
+.header__menu-line:nth-child(1) {
+    right: 30px;
+    top: 4px;
+}
+
+.header__menu-line:nth-child(2) {
+    right: 30px;
+    top: 13px;
+}
+
+.header__menu-line:nth-child(3) {
+    right: 30px;
+    top: 22px;
+}
+
+.header__menu_active .header__menu-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.header__menu_active .header__menu-line:nth-child(2) {
+    opacity: 0;
+}
+
+.header__menu_active .header__menu-line:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}

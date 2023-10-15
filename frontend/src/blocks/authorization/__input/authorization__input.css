@@ -1,0 +1,23 @@
+.authorization__input {
+    font-style: normal;
+    color: #FFF;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: block;
+    min-width: 358px;
+    border: 0;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    background-color: transparent;
+}
+
+@media screen and (max-width: 320px) {
+    .authorization__input {
+        font-weight: 400;
+        min-width: 260px;
+        padding-bottom: 13px;
+    }
+}
