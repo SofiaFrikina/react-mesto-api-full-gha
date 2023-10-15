@@ -6,6 +6,8 @@ const allowedCors = [
   'http://localhost:3000',
   'https://localhost:3000',
 ];
-const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
+const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
-module.exports = { SUCCESSFUL_ANSWER, URL_VALIDATE, allowedCors, DEFAULT_ALLOWED_METHODS };
+module.exports = {
+  SUCCESSFUL_ANSWER, URL_VALIDATE, allowedCors, DEFAULT_ALLOWED_METHODS,
+};
