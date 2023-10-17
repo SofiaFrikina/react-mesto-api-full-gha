@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const router = require('./routes/index');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1/mestodb' } = process.env;
 
@@ -21,9 +20,7 @@ mongoose.connect(DB_URL);
 
 // подключаем мидлвары, роуты и всё остальное...
 
-app.use(requestLogger);
 app.use(router);
-app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   // если у ошибки нет статуса, выставляем 500
