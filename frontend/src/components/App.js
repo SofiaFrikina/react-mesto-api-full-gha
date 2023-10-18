@@ -43,8 +43,20 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    function handleTokenCheck() {
+      const jwt = localStorage.getItem('jwt');
+      if (jwt) {
+        checkToken(jwt)
+          .then((res) => {
+            setLoggedIn(true)
+            setUserEmail(res.data.email)
+            navigate('/', { replace: true })
+          })
+          .catch((err) => console.log(err))
+      }
+    }
     handleTokenCheck();
-  }, []);
+  }, [navigate]);
 
   function handleRegister(email, password) {
     register(password, email)
@@ -75,21 +87,6 @@ function App() {
         setMessage(false);
         setInfoTooltipOpen(true);
       })
-  }
-
-
-
-  function handleTokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      checkToken(jwt)
-        .then((res) => {
-          setLoggedIn(true)
-          setUserEmail(res.data.email)
-          navigate('/', { replace: true })
-        })
-        .catch((err) => console.log(err))
-    }
   }
 
   function handleCardClick(card) {
