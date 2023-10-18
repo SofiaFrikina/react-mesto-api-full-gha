@@ -44,7 +44,7 @@ function App() {
 
   React.useEffect(() => {
     handleTokenCheck();
-  })
+  }, []);
 
   function handleRegister(email, password) {
     register(password, email)
