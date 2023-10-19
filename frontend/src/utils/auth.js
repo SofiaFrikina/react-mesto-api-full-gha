@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.sofia.frikina.nomoredomainsrocks.ru/';
+export const BASE_URL = 'https://api.sofia.frikina.nomoredomainsrocks.ru';
 
 function checkResponse(res) {
     if (res.ok) {
