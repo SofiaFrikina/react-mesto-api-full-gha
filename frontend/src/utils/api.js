@@ -90,7 +90,7 @@ class Api {
 const api = new Api({
     url: 'https://api.sofia.frikina.nomoredomainsrocks.ru',
     headers: {
-        authorization: '',
+        authorization: 'c6851ead-6953-413a-a6ee-14ef0893ecb7',
         'Content-Type': 'application/json'
     }
 })

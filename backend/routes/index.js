@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
+
 const userRouter = require('./users');
 const cardRouter = require('./cards');
 const NotFoundError = require('../utils/errors/NotFoundError');
@@ -7,7 +8,8 @@ const { URL_VALIDATE, allowedCors, DEFAULT_ALLOWED_METHODS } = require('../utils
 const auth = require('../middlewares/auth');
 
 const { createUser, login } = require('../controllers/users');
-router.use(function (req, res, next) {
+
+router.use((req, res, next) => {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
   // проверяем, что источник запроса есть среди разрешённых
   const { method } = req;
@@ -21,13 +23,12 @@ router.use(function (req, res, next) {
       return res.end();
     }
   }
-
   return next();
 });
 
 router.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадет')
+    throw new Error('Сервер сейчас упадет');
   }, 0);
 });
 

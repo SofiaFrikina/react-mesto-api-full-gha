@@ -3,7 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const cors = require('cors');
 const { errors } = require('celebrate');
+const { corsOptions } = require('./utils/constants');
 const router = require('./routes/index');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1/mestodb' } = process.env;
@@ -16,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 // подключаемся к серверу mongo
 mongoose.connect(DB_URL);
+app.use(cors(corsOptions));
 
 // подключаем мидлвары, роуты и всё остальное...
 
