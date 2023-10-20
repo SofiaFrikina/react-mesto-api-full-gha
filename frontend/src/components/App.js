@@ -43,21 +43,20 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    handleTokenCheck();
-  });
-
-  function handleTokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      checkToken(jwt)
-        .then((res) => {
-          setLoggedIn(true)
-          setUserEmail(res.data.email)
-          navigate('/', { replace: true })
-        })
-        .catch((err) => console.log(err))
+    function handleTokenCheck() {
+      const jwt = localStorage.getItem('jwt');
+      if (jwt) {
+        checkToken(jwt)
+          .then((res) => {
+            setLoggedIn(true)
+            setUserEmail(res.data.email)
+            navigate('/', { replace: true })
+          })
+          .catch((err) => console.log(err))
+      }
     }
-  }
+    handleTokenCheck();
+  }, [navigate]);
 
   function handleRegister(email, password) {
     register(password, email)
