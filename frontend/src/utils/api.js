@@ -15,19 +15,15 @@ class Api {
     };
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
-            headers: {
-                method: 'GET',
-                authorization: this._authorization
-            }
+            method: 'GET',
+            headers: this._headers
         })
             .then(this._handleResponse)
     };
     getCards() {
         return fetch(`${this._url}/cards`, {
-            headers: {
-                method: 'GET',
-                authorization: this._authorization
-            }
+            method: 'GET',
+            headers: this._headers
         })
             .then(this._handleResponse)
     };
