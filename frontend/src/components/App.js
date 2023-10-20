@@ -44,7 +44,8 @@ function App() {
 
   React.useEffect(() => {
     handleTokenCheck();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleRegister(email, password) {
     register(password, email)
