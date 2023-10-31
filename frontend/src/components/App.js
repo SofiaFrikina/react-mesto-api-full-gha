@@ -32,23 +32,32 @@ function App() {
 
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCards()])
-      .then(([resUser, resCard]) => {
-        setCurrentUser(resUser);
-        setCards(resCard);
-      })
-      .catch((err) => console.log(err))
-
-
-  }, []);
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getCards()])
+        .then(([resUser, resCard]) => {
+          setCurrentUser(resUser);
+          setCards(resCard);
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn]);
 
   React.useEffect(() => {
-    handleTokenCheck();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const token = localStorage.getItem('token');
+    if (token) {
+      checkToken(token)
+        .then((res) => {
+          api.setToken(token);
+          setUserEmail(res.email)
+          setLoggedIn(true);
+          navigate('/', { replace: true })
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [navigate]);
 
   function handleRegister(email, password) {
-    register(password, email)
+    register(email, password)
       .then((res) => {
         setInfoTooltipOpen(true)
         if (res) {
@@ -63,32 +72,19 @@ function App() {
   }
 
   function handleLogin(email, password) {
-    authorize(password, email)
+    authorize(email, password)
       .then((res) => {
         if (res) {
+          localStorage.setItem('token', res.token)
           setLoggedIn(true);
-          setUserEmail(email);
+          setUserEmail(res.email);
           navigate('/', { replace: true })
-          localStorage.setItem('jwt', res.token)
         }
       })
       .catch(() => {
         setMessage(false);
         setInfoTooltipOpen(true);
       })
-  }
-
-  function handleTokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      checkToken(jwt)
-        .then((res) => {
-          setLoggedIn(true)
-          setUserEmail(res.data.email)
-          navigate('/', { replace: true })
-        })
-        .catch((err) => console.log(err))
-    }
   }
 
   function handleCardClick(card) {
@@ -159,7 +155,7 @@ function App() {
     setInfoTooltipOpen(false);
   }
   function onSignOut() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('token');
     setLoggedIn(false);
     setUserEmail('');
     navigate('/sign-in')

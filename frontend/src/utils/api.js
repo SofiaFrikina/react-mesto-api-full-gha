@@ -4,7 +4,6 @@ class Api {
     constructor(config) {
         this._url = config.url;
         this._headers = config.headers;
-        this._authorization = config.headers['authorization'];
     }
     _handleResponse = (res) => {
         if (res.ok) {
@@ -13,17 +12,22 @@ class Api {
         return Promise.reject('Произошла ошибка')
         // return Promise.reject(new Error('Произошла ошибка.'))
     };
+
+    setToken(token) {
+        this._headers.authorization = `Bearer ${token}`;
+    }
+
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
             method: 'GET',
-            headers: this._headers
+            headers: this._headers,
         })
             .then(this._handleResponse)
     };
     getCards() {
         return fetch(`${this._url}/cards`, {
             method: 'GET',
-            headers: this._headers
+            headers: this._headers,
         })
             .then(this._handleResponse)
     };
@@ -67,7 +71,7 @@ class Api {
     deleteCard(id) {
         return fetch(`${this._url}/cards/${id}`, {
             method: "DELETE",
-            headers: this._headers
+            headers: this._headers,
         })
             .then(this._handleResponse)
     };
@@ -86,9 +90,8 @@ class Api {
 const api = new Api({
     url: 'https://api.sofia.frikina.nomoredomainsrocks.ru',
     headers: {
-        authorization: 'c6851ead-6953-413a-a6ee-14ef0893ecb7',
-        'Content-Type': 'application/json'
-    }
+        "Content-Type": "application/json",
+    },
 })
 
 export default api;

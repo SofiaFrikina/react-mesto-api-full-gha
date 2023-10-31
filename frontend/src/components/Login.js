@@ -1,14 +1,28 @@
 
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+import { authorize } from '../utils/auth';
+import api from '../utils/api'
 
 
 function Login({ onLogin }) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const navigate = useNavigate();
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        onLogin(email, password)
+        authorize(email, password)
+            .then(res => {
+                const token = res.token;
+                if (token) {
+                    localStorage.setItem('token', token);
+                    api.setToken(token);
+                }
+                onLogin();
+                navigate("/");
+            })
+
     }
 
     function handleEmailChange(evt) {
