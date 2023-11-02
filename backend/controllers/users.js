@@ -1,6 +1,6 @@
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 const User = require('../models/user');
 const {
   ValidationError, AthorizedError, NotFoundError, ConflictError, ServerError,
@@ -102,15 +102,19 @@ const updateAvatar = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  return User.findUserByCredentials(email, password)
+  User.findOne({ email })
+    .select('+password')
     .then((user) => {
       if (!user) {
-        throw (new AthorizedError('Введены неправильная почта или пароль'));
+        throw new AthorizedError('Неправильные почта или пароль');
       }
-      // создадим токен
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
-      // вернём токен
-      res.status(SUCCESSFUL_ANSWER).send({ token });
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (matched) {
+            const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+            res.status(SUCCESSFUL_ANSWER).send({ token });
+          }
+        });
     })
     .catch(next);
 };

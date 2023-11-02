@@ -42,14 +42,14 @@ function App() {
     }
   }, [loggedIn]);
 
+
   React.useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       checkToken(token)
-        .then((res) => {
-          api.setToken(token);
-          setUserEmail(res.email)
+        .then((data) => {
           setLoggedIn(true);
+          setUserEmail(data.email)
           navigate('/', { replace: true })
         })
         .catch((err) => console.log(err))
@@ -58,12 +58,11 @@ function App() {
 
   function handleRegister(email, password) {
     register(email, password)
-      .then((res) => {
+      .then(() => {
         setInfoTooltipOpen(true)
-        if (res) {
-          setMessage(true);
-          navigate('/sign-in', { replace: true })
-        }
+        setMessage(true);
+        navigate('/sign-in', { replace: true })
+
       })
       .catch(() => {
         setMessage(false);
@@ -73,14 +72,13 @@ function App() {
 
   function handleLogin(email, password) {
     authorize(email, password)
-      .then((res) => {
-        if (res) {
-          localStorage.setItem('token', res.token)
-          setLoggedIn(true);
-          setUserEmail(res.email);
-          navigate('/', { replace: true })
-        }
-      })
+      .then(() => {
+        setUserEmail(email);
+        setLoggedIn(true);
+        navigate('/', { replace: true })
+        localStorage.setItem('loggedIn', true);
+      }
+      )
       .catch(() => {
         setMessage(false);
         setInfoTooltipOpen(true);

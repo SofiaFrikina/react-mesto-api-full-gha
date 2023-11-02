@@ -13,10 +13,6 @@ class Api {
         // return Promise.reject(new Error('Произошла ошибка.'))
     };
 
-    setToken(token) {
-        this._headers.authorization = `Bearer ${token}`;
-    }
-
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
             method: 'GET',
