@@ -1,9 +1,7 @@
-
-
 class Api {
-    constructor(config) {
-        this._url = config.url;
-        this._headers = config.headers;
+    constructor({ url, headers }) {
+        this._url = url;
+        this._headers = headers;
     }
     _handleResponse = (res) => {
         if (res.ok) {
@@ -12,6 +10,10 @@ class Api {
         return Promise.reject('Произошла ошибка')
         // return Promise.reject(new Error('Произошла ошибка.'))
     };
+
+    setToken(token) {
+        this._headers.authorization = `Bearer ${token}`;
+    }
 
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
