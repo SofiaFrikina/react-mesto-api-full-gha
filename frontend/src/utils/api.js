@@ -19,7 +19,6 @@ class Api {
         return fetch(`${this._url}/users/me`, {
             method: 'GET',
             headers: this._headers,
-            credentials: 'include',
         })
             .then(this._handleResponse)
     };
@@ -27,7 +26,6 @@ class Api {
         return fetch(`${this._url}/cards`, {
             method: 'GET',
             headers: this._headers,
-            credentials: 'include',
         })
             .then(this._handleResponse)
     };
@@ -35,7 +33,6 @@ class Api {
         return fetch(`${this._url}/users/me`, {
             method: "PATCH",
             headers: this._headers,
-            credentials: 'include',
             body: JSON.stringify({
                 name: data.name,
                 about: data.about
@@ -47,7 +44,6 @@ class Api {
         return fetch(`${this._url}/cards`, {
             method: "POST",
             headers: this._headers,
-            credentials: 'include',
             body: JSON.stringify({
                 name: data.name,
                 link: data.link
@@ -59,7 +55,6 @@ class Api {
         return fetch(`${this._url}/cards/${id}/likes`, {
             method: "PUT",
             headers: this._headers,
-            credentials: 'include',
         })
             .then(this._handleResponse)
     };
@@ -67,7 +62,6 @@ class Api {
         return fetch(`${this._url}/cards/${id}/likes`, {
             method: "DELETE",
             headers: this._headers,
-            credentials: 'include',
 
         })
             .then(this._handleResponse)
@@ -76,7 +70,6 @@ class Api {
         return fetch(`${this._url}/cards/${id}`, {
             method: "DELETE",
             headers: this._headers,
-            credentials: 'include',
         })
             .then(this._handleResponse)
     };
@@ -84,7 +77,6 @@ class Api {
         return fetch(`${this._url}/users/me/avatar`, {
             method: "PATCH",
             headers: this._headers,
-            credentials: 'include',
             body: JSON.stringify({
                 avatar: data.avatar
             })
