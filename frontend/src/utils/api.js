@@ -1,7 +1,9 @@
+
+
 class Api {
-    constructor({ url, headers }) {
-        this._url = url;
-        this._headers = headers;
+    constructor(config) {
+        this._url = config.url;
+        this._headers = config.headers;
     }
     _handleResponse = (res) => {
         if (res.ok) {
