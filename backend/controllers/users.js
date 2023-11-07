@@ -7,7 +7,7 @@ const {
 } = require('../utils/errors/errors');
 const { SUCCESSFUL_ANSWER } = require('../utils/constants');
 
-const { JWT_SECRET = 'dev-secret' } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getAllUsers = (req, res, next) => {
   User.find({})
@@ -108,7 +108,7 @@ const login = (req, res, next) => {
         throw (new AthorizedError('Введены неправильная почта или пароль'));
       }
       // создадим токен
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       // вернём токен
       res.status(SUCCESSFUL_ANSWER).send({ token });
     })
