@@ -43,13 +43,12 @@ function App() {
   }, [loggedIn]);
 
   React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      checkToken(token)
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      checkToken(jwt)
         .then((res) => {
-          api.setToken(token);
+          setLoggedIn(true)
           setUserEmail(res.email)
-          setLoggedIn(true);
           navigate('/', { replace: true })
         })
         .catch((err) => console.log(err))
@@ -74,12 +73,11 @@ function App() {
   function handleLogin(email, password) {
     authorize(email, password)
       .then((res) => {
-        if (res) {
-          localStorage.setItem('token', res.token)
-          setLoggedIn(true);
-          setUserEmail(res.email);
-          navigate('/', { replace: true })
-        }
+        setLoggedIn(true);
+        setUserEmail(email);
+        navigate('/', { replace: true })
+        localStorage.setItem('jwt', res.token)
+
       })
       .catch(() => {
         setMessage(false);
@@ -155,7 +153,7 @@ function App() {
     setInfoTooltipOpen(false);
   }
   function onSignOut() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     setLoggedIn(false);
     setUserEmail('');
     navigate('/sign-in')
