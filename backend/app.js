@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { allowedCors, DEFAULT_ALLOWED_METHODS } = require('./utils/constants');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1/mestodb' } = process.env;
 
@@ -24,6 +25,28 @@ mongoose.connect(DB_URL);
 app.use(router);
 app.use(errors());
 app.use(errorLogger);
+app.use((req, res, next) => {
+  const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
+  // проверяем, что источник запроса есть среди разрешённых
+  const { method } = req;
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    if (method === 'OPTIONS') {
+      // разрешаем кросс-доменные запросы любых типов (по умолчанию)
+      res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+      const requestHeaders = req.headers['access-control-request-headers'];
+      res.header('Access-Control-Allow-Headers', requestHeaders);
+      return res.end();
+    }
+  }
+  return next();
+});
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадет');
+  }, 0);
+});
 app.use((err, req, res, next) => {
   // если у ошибки нет статуса, выставляем 500
   const { statusCode = 500, message } = err;
