@@ -53,7 +53,21 @@ class Api {
         })
             .then(this._handleResponse)
     };
-    likeCard(cardId) {
+
+    changeLikeCardStatus(cardId, isLiked) {
+        if (isLiked) {
+            return fetch(`${this._url}/cards/${cardId}/likes`, {
+                method: "PUT",
+                headers: this._headers,
+            }).then(this._handleResponse)
+        } else {
+            return fetch(`${this._url}/cards/${cardId}/likes`, {
+                method: "DELETE",
+                headers: this._headers,
+            }).then(this._handleResponse)
+        }
+    }
+    /*likeCard(cardId) {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: "PUT",
             headers: this._headers,
@@ -67,7 +81,7 @@ class Api {
 
         })
             .then(this._handleResponse)
-    };
+    };*/
     deleteCard(cardId) {
         return fetch(`${this._url}/cards/${cardId}`, {
             method: "DELETE",

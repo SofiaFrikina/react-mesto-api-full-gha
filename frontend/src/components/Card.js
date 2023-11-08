@@ -5,10 +5,18 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     // Определяем, являемся ли мы владельцем текущей карточки
     const isOwn = card.owner._id === currentUser._id;
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    const cardLikeButtonClassName = (
-        `element__button ${isLiked && 'element_clicked'}`
-    );
+    const [isLiked, setisLiked] = React.useState(card.likes.some((i) => i === currentUser._id));
+    const [cardLikeButtonClassName, setcardLikeButtonClassName] = React.useState(`element__button ${isLiked && "element_clicked"
+        }`);
+
+    React.useEffect(() => {
+
+        setisLiked(card.likes.some((i) => i === currentUser._id))
+        setcardLikeButtonClassName(`element__button ${isLiked && "element_clicked"
+            }`)
+
+    }, [card.likes, isLiked, currentUser._id]);
+
     function handleLikeClick() {
         onCardLike(card);
     }

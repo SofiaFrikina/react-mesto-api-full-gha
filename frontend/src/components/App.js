@@ -93,10 +93,19 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-
+    const isLiked = card.likes.some((i) => i === currentUser._id);
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        const newCardsList = cards.map(c => {
+          if (c._id === newCard._id) {
+            return newCard;
+          }
+          return c;
+        });
+        setCards(newCardsList)
+      })
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    if (!isLiked) {
+    /*if (!isLiked) {
       api.likeCard(card._id, !isLiked).then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       }).catch((err) => console.log(err))
@@ -104,13 +113,15 @@ function App() {
       api.deleteLike(card._id, !isLiked).then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       }).catch((err) => console.log(err))
-    }
+    }*/
 
   }
+
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards((item) => item.filter((c) => c._id !== card._id && c))
-    }).catch((err) => console.log(err))
+    api.deleteCard(card._id)
+      .then(() => {
+        setCards((state) => state.filter((item) => item._id !== card._id))
+      }).catch((err) => console.log(err))
   }
 
   function handleUpdateUser(data) {
