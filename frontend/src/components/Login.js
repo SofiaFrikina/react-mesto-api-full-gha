@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { authorize } from '../utils/auth';
-import api from '../utils/api'
+
 
 
 function Login({ onLogin }) {
@@ -12,16 +11,9 @@ function Login({ onLogin }) {
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        authorize(email, password)
-            .then(res => {
-                const token = res.token;
-                if (token) {
-                    localStorage.setItem('token', token);
-                    api.setToken(token);
-                }
-                onLogin();
-                navigate("/");
-            })
+        onLogin(email, password);
+        navigate("/");
+
 
     }
 

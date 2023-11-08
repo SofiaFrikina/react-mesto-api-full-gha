@@ -25,13 +25,13 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCardId = (req, res, next) => {
-  Card.findById(req.params.cardId)
+  Card.findById(req.params.id)
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Пользователь не найден');
       } else if (card.owner.toString() !== req.user._id) {
         throw (new ForbiddenError('Вы не можете удалить чужую карточку'));
-      } Card.findByIdAndDelete(req.params.cardId)
+      } Card.findByIdAndDelete(req.params.id)
         .then((deletedCard) => {
           res.send(deletedCard);
         });
@@ -49,7 +49,7 @@ module.exports.deleteCardId = (req, res, next) => {
 
 module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
-    req.params.cardId,
+    req.params.id,
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
     { new: true },
   )
@@ -72,7 +72,7 @@ module.exports.likeCard = (req, res, next) => {
 
 module.exports.dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
-    req.params.cardId,
+    req.params.id,
     { $pull: { likes: req.user._id } }, // убрать _id из массива
     { new: true },
   )
