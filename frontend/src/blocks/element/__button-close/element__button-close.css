@@ -4,14 +4,14 @@
     height: 19px;
     border: none;
     position: absolute;
-    top: 59px;
-    right: 80px;
+    top: 20px;
+    right: 20px;
     
     
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     cursor: pointer;
     flex-shrink: 0;
     padding: 0;

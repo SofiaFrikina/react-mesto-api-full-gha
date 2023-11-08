@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     const currentUser = React.useContext(CurrentUserContext);
     // Определяем, являемся ли мы владельцем текущей карточки
-    const isOwn = card.owner._id === currentUser._id;
+    const isOwn = card.owner === currentUser._id;
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
     const [isLiked, setisLiked] = React.useState(card.likes.some((i) => i === currentUser._id));
     const [cardLikeButtonClassName, setcardLikeButtonClassName] = React.useState(`element__button ${isLiked && "element_clicked"
@@ -36,7 +36,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
                     <span className="element__count">{card.likes.length}</span>
                 </div>
             </div>
-            {isOwn && <button onClick={handleDeleteClick} type="button" className="element__button-close" aria-label="Удалить картинку" />}
+            {isOwn && (<button onClick={handleDeleteClick} type="button" className="element__button-close" aria-label="Удалить картинку" />)}
         </div>
     )
 }
