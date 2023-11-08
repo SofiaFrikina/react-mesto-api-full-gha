@@ -22,8 +22,9 @@ const getUserId = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
+      } else {
+        next(res.send(user));
       }
-      return res.send(user);
     })
     .catch((err) => {
       if (err.message === 'NotFoundError') {
@@ -120,8 +121,9 @@ const getCurrentUser = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
+      } else {
+        next(res.send(user));
       }
-      return res.send(user);
     })
     .catch((err) => {
       if (err.message === 'NotFoundError') {

@@ -82,6 +82,7 @@ class Api {
         })
             .then(this._handleResponse)
     };*/
+
     deleteCard(cardId) {
         return fetch(`${this._url}/cards/${cardId}`, {
             method: "DELETE",
