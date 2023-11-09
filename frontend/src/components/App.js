@@ -75,7 +75,8 @@ function App() {
     authorize(email, password)
       .then((res) => {
         if (res) {
-          localStorage.setItem('token', res.token)
+          localStorage.setItem('token', res.token);
+          api.setToken(res.token);
           setLoggedIn(true);
           setUserEmail(res.email);
           navigate('/', { replace: true })

@@ -14,7 +14,7 @@ class Api {
     };
 
     setToken(token) {
-        this._headers.authorization = `Bearer ${token}`;
+        this._headers['authorization'] = `Bearer ${token}`;
     }
 
     getUserInfo() {
@@ -105,6 +105,7 @@ class Api {
 const api = new Api({
     url: 'https://api.sofia.frikina.nomoredomainsrocks.ru',
     headers: {
+        authorization: '',
         "Content-Type": "application/json",
     },
 })
